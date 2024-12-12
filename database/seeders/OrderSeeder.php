@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class OrderSeeder extends Seeder
 {
@@ -12,6 +13,9 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        DB::table('orders')->insert([
+            'product_id' => 1,
+            'amount' => 50000,
+        ]);
     }
 }
