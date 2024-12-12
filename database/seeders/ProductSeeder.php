@@ -18,6 +18,8 @@ class ProductSeeder extends Seeder
             'category_id' => 1,
             'name' => 'Sepatu satoe',
             'price' => 50000,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

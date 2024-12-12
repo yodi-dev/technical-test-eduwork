@@ -16,11 +16,15 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             'code' => 'shoe1',
             'name' => 'Sepatu Pria',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         DB::table('categories')->insert([
             'code' => 'shoe2',
             'name' => 'Sepatu Wanita',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

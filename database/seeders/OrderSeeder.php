@@ -16,6 +16,8 @@ class OrderSeeder extends Seeder
         DB::table('orders')->insert([
             'product_id' => 1,
             'amount' => 50000,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

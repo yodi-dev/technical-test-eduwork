@@ -20,6 +20,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make('secret12'),
             'phone_number' => '0812434343434',
             'phone_number' => '0812434343434',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }
