@@ -39,6 +39,24 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Dashboard
                                 </NavLink>
+                                <NavLink
+                                    :href="route('orders')"
+                                    :active="route().current('orders')"
+                                >
+                                    Order
+                                </NavLink>
+                                <NavLink
+                                    :href="route('products')"
+                                    :active="route().current('products')"
+                                >
+                                    Product
+                                </NavLink>
+                                <NavLink
+                                    :href="route('categories')"
+                                    :active="route().current('categories')"
+                                >
+                                    Category
+                                </NavLink>
                             </div>
                         </div>
 
@@ -178,16 +196,6 @@ const showingNavigationDropdown = ref(false);
                     </div>
                 </div>
             </nav>
-
-            <!-- Page Heading -->
-            <header
-                class="bg-white shadow dark:bg-gray-800"
-                v-if="$slots.header"
-            >
-                <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
 
             <!-- Page Content -->
             <main>
