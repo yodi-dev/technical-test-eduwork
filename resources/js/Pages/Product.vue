@@ -8,7 +8,7 @@ const apiURL = 'http://shoe-shop.test/api/products';
 const products = ref([]);
 const isLoading = ref(false);
 
-// Fungsi untuk memuat data produk
+
 const loadProducts = async () => {
     isLoading.value = true;
     try {
