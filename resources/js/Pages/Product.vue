@@ -21,7 +21,7 @@ const loadProducts = async () => {
     }
 };
 
-// Fungsi placeholder untuk edit dan hapus produk
+
 const editProduct = (id) => {
     alert(`Edit produk dengan ID: ${id}`);
 };
