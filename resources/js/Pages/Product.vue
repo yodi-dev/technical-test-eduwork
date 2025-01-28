@@ -30,7 +30,7 @@ const deleteProduct = (id) => {
     alert(`Hapus produk dengan ID: ${id}`);
 };
 
-// Panggil fungsi saat komponen dimount
+
 onMounted(loadProducts);
 </script>
 
