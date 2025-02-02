@@ -24,6 +24,9 @@ Route::middleware('auth')->group(
         Route::get('/categories', function () {
             return Inertia::render('Category');
         })->name('categories');
+        Route::get('/create-category', function () {
+            return Inertia::render('CreateCategory');
+        })->name('category.create');
     }
 );
 
