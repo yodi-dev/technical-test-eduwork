@@ -30,29 +30,30 @@ const createCategory = async () => {
 <template>
     <Head title="Create Category" />
 
-        <div class="max-w-md mx-auto mt-10">
-            <h1 class="text-2xl font-bold mb-4">Create Category</h1>
-            <form @submit.prevent="createCategory">
-                <input
-                    v-model="code"
-                    type="text"
-                    placeholder="Category Code"
-                    class="border p-2 w-full mb-2"
-                    required
-                />
-                <input
-                    v-model="name"
-                    type="text"
-                    placeholder="Category Name"
-                    class="border p-2 w-full mb-2"
-                    required
-                />
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2">
-                    Create
-                </button>
-            </form>
-            <p v-if="message" class="text-green-600 mt-2">{{ message }}</p>
-        </div>
+    <div class="max-w-md mx-auto mt-10 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold mb-4">Create Category</h1>
+        <form @submit.prevent="createCategory">
+            <input
+                v-model="code"
+                type="text"
+                placeholder="Category Code"
+                class="border p-2 w-full mb-4 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+            />
+            <input
+                v-model="name"
+                type="text"
+                placeholder="Category Name"
+                class="border p-2 w-full mb-4 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+            />
+            <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Create
+            </button>
+        </form>
+        <p v-if="message" class="text-green-400 mt-2">{{ message }}</p>
+    </div>
 </template>
+
 
 
