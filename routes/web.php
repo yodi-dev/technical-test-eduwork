@@ -14,18 +14,18 @@ Route::middleware('auth')->group(
         })->name('dashboard');
 
         Route::get('/orders', function () {
-            return Inertia::render('Order');
+            return Inertia::render('Order/Order');
         })->name('orders');
 
         Route::get('/products', function () {
-            return Inertia::render('Product');
+            return Inertia::render('Product/Product');
         })->name('products');
 
         Route::get('/categories', function () {
-            return Inertia::render('Category');
+            return Inertia::render('Category/Category');
         })->name('categories');
         Route::get('/create-category', function () {
-            return Inertia::render('CreateCategory');
+            return Inertia::render('Category/CreateCategory');
         })->name('category.create');
     }
 );
