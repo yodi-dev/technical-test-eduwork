@@ -16,10 +16,13 @@ const createCategory = async () => {
             code: code.value,
         });
 
-        message.value = response.data.message;
+        message.value = "Successfully create Category";
         name.value = "";
         code.value = "";
-        window.location.href = "/categories";
+
+        setTimeout(() => {
+            window.location.href = "/categories";
+        }, 1000);
 
     } catch (error) {
         console.error(error);

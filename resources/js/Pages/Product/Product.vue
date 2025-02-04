@@ -21,15 +21,23 @@ const loadProducts = async () => {
     }
 };
 
+const deleteProduct = async (id) => {
+    if (!confirm("Are you sure delete product?")) return;
+
+    try {
+        await axios.delete(`http://shoe-shop.test/api/products/${id}`);
+
+        // Hapus dari UI
+        products.value = products.value.filter(cat => cat.id !== id);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 
 const editProduct = (id) => {
     alert(`Edit produk dengan ID: ${id}`);
 };
-
-const deleteProduct = (id) => {
-    alert(`Hapus produk dengan ID: ${id}`);
-};
-
 
 onMounted(loadProducts);
 </script>

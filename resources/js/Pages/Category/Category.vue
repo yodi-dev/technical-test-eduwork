@@ -20,16 +20,45 @@ const loadCategories = async () => {
     }
 };
 
-// Fungsi placeholder untuk edit dan hapus produk
-const editProduct = (id) => {
-    alert(`Edit produk dengan ID: ${id}`);
+const deleteCategory = async (id) => {
+    if (!confirm("Are you sure delete category?")) return;
+
+    try {
+        await axios.delete(`http://shoe-shop.test/api/categories/${id}`);
+
+        // Hapus dari UI
+        categories.value = categories.value.filter(cat => cat.id !== id);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
-const deleteProduct = (id) => {
-    alert(`Hapus produk dengan ID: ${id}`);
+const updateCategory = async (category) => {
+    const input = prompt(`Edit category (pisahkan dengan koma):\nKode, Nama`, `${category.code}, ${category.name}`);
+    
+    if (!input) return; // Jika user cancel
+    const [newCode, newName] = input.split(",").map(item => item.trim());
+
+    if (!newCode || !newName) {
+        alert("Input tidak valid! Pastikan formatnya: Kode, Nama");
+        return;
+    }
+
+    try {
+        await axios.put(`http://shoe-shop.test/api/categories/${category.id}`, {
+            code: newCode,
+            name: newName
+        });
+
+        category.code = newCode;
+        category.name = newName;
+    } catch (error) {
+        console.error(error);
+    }
 };
 
-// Panggil fungsi saat komponen dimount
+
+
 onMounted(loadCategories);
 </script>
 
@@ -79,7 +108,7 @@ onMounted(loadCategories);
                                     <td class="px-4 py-2 text-gray-300">
                                         <button
                                             class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800"
-                                            @click="editCategory(category.id)"
+                                            @click="updateCategory(category)"
                                         >
                                             Edit
                                         </button>

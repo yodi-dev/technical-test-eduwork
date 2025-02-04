@@ -31,9 +31,9 @@ class CategoryController extends Controller
         return response()->json($category);
     }
 
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        Category::destroy($id);
-        return response()->json(null, 204);
+        $category->delete();
+        return response()->json(['message' => 'Kategori berhasil dihapus']);
     }
 }

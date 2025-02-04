@@ -29,7 +29,7 @@ const createProduct = async () => {
             price: price.value,
         });
 
-        message.value = response.data.message;
+        message.value = "Successfully create Product";
         code.value = "";
         name.value = "";
         category_id.value = "";
