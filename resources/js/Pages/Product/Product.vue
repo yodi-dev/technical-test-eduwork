@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { Link } from "@inertiajs/vue3";
 
 const apiURL = 'http://shoe-shop.test/api/products';
 const products = ref([]);
@@ -42,11 +43,12 @@ onMounted(loadProducts);
                     <div class="container mx-auto p-4">
                         <div class="mb-4 flex justify-between items-center">
                             <h1 class="text-xl font-bold text-white">Manajemen Produk</h1>
-                            <button
+                            <Link
+                                href="/create-product"
                                 class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800"
-                                >
-                                Tambah Produk
-                            </button>
+                            >
+                                Add Product
+                            </Link>
                         </div>
 
                         <div class="overflow-x-auto">
@@ -54,10 +56,11 @@ onMounted(loadProducts);
                                 <thead>
                                     <tr class="bg-gray-700 border-b">
                                         <th class="text-left px-4 py-2 font-medium text-gray-300">#</th>
-                                        <th class="text-left px-4 py-2 font-medium text-gray-300">Nama Produk</th>
-                                        <th class="text-left px-4 py-2 font-medium text-gray-300">Kategori</th>
-                                        <th class="text-left px-4 py-2 font-medium text-gray-300">Harga</th>
-                                        <th class="text-left px-4 py-2 font-medium text-gray-300">Aksi</th>
+                                        <th class="text-left px-4 py-2 font-medium text-gray-300">Code</th>
+                                        <th class="text-left px-4 py-2 font-medium text-gray-300">Product Name</th>
+                                        <th class="text-left px-4 py-2 font-medium text-gray-300">Category</th>
+                                        <th class="text-left px-4 py-2 font-medium text-gray-300">Price</th>
+                                        <th class="text-left px-4 py-2 font-medium text-gray-300">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,8 +75,9 @@ onMounted(loadProducts);
                                         class="border-b hover:bg-gray-700"
                                     >
                                         <td class="px-4 py-2 text-gray-300">{{ index + 1 }}</td>
+                                        <td class="px-4 py-2 text-gray-300">{{ product.code }}</td>
                                         <td class="px-4 py-2 text-gray-300">{{ product.name }}</td>
-                                        <td class="px-4 py-2 text-gray-300">{{ product.category_id }}</td>
+                                        <td class="px-4 py-2 text-gray-300">{{ product.category_name }}</td>
                                         <td class="px-4 py-2 text-gray-300">Rp {{ product.price.toLocaleString() }}</td>
                                         <td class="px-4 py-2 text-gray-300">
                                             <button

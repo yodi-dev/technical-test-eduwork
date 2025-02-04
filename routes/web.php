@@ -20,6 +20,9 @@ Route::middleware('auth')->group(
         Route::get('/products', function () {
             return Inertia::render('Product/Product');
         })->name('products');
+        Route::get('/create-product', function () {
+            return Inertia::render('Product/CreateProduct');
+        })->name('product.create');
 
         Route::get('/categories', function () {
             return Inertia::render('Category/Category');
