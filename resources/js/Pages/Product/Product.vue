@@ -2,7 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import { ref, onMounted, reactive } from 'vue';
 import axios from 'axios';
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 
 const productsUrl = 'http://shoe-shop.test/api/products';
 const categoriesUrl = 'http://shoe-shop.test/api/categories';
@@ -59,8 +59,7 @@ const updateProduct = async () => {
             price: editProduct.price,
         });
 
-        const index = products.value.findIndex(p => p.id === editProduct.id);
-        if (index !== -1 ) products.value[index] = {...editProduct};
+        await loadProducts(); 
 
         isModalOpen.value = false;
     } catch (error) {
@@ -114,7 +113,7 @@ onMounted(loadProducts);
                                         <td class="px-4 py-2 text-gray-300">{{ index + 1 }}</td>
                                         <td class="px-4 py-2 text-gray-300">{{ product.code }}</td>
                                         <td class="px-4 py-2 text-gray-300">{{ product.name }}</td>
-                                        <td class="px-4 py-2 text-gray-300">{{ product.category_name }}</td>
+                                        <td class="px-4 py-2 text-gray-300">{{ product.category_name ? product.category_name : 'No Category' }}</td>
                                         <td class="px-4 py-2 text-gray-300">Rp {{ product.price.toLocaleString() }}</td>
                                         <td class="px-4 py-2 text-gray-300">
                                             <button
@@ -135,24 +134,33 @@ onMounted(loadProducts);
                             </table>
 
                              <!-- Modal -->
-                            <div v-if="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                                <div class="bg-white p-6 rounded-lg w-96">
-                                    <h2 class="text-xl font-bold mb-4">Edit Product</h2>
-                                    <input v-model="editProduct.code" type="text" placeholder="Code" class="w-full border p-2 mb-2 rounded" />
-                                    <input v-model="editProduct.name" type="text" placeholder="Name" class="w-full border p-2 mb-2 rounded" />
-                                    <select v-model="editProduct.category_id" class="w-full border p-2 mb-2 rounded">
+                            <div v-if="isModalOpen" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+                                <div class="bg-gray-900 p-6 rounded-lg w-96 shadow-lg">
+                                    <h2 class="text-xl font-bold mb-4 text-white">Edit Product</h2>
+                                    
+                                    <input v-model="editProduct.code" type="text" placeholder="Code" class="w-full border border-gray-700 bg-gray-800 text-white p-2 mb-2 rounded" />
+                                    
+                                    <input v-model="editProduct.name" type="text" placeholder="Name" class="w-full border border-gray-700 bg-gray-800 text-white p-2 mb-2 rounded" />
+                                    
+                                    <select v-model="editProduct.category_id" class="w-full border border-gray-700 bg-gray-800 text-white p-2 mb-2 rounded">
                                         <option v-for="category in categories" :key="category.id" :value="category.id">
                                             {{ category.name }}
                                         </option>
                                     </select>
-                                    <input v-model="editProduct.price" type="number" placeholder="Price" class="w-full border p-2 mb-2 rounded" />
+                                    
+                                    <input v-model="editProduct.price" type="number" placeholder="Price" class="w-full border border-gray-700 bg-gray-800 text-white p-2 mb-2 rounded" />
                                     
                                     <div class="flex justify-end space-x-2 mt-4">
-                                        <button @click="isModalOpen = false" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
-                                        <button @click="updateProduct" class="bg-blue-600 text-white px-4 py-2 rounded">Update</button>
+                                        <button @click="isModalOpen = false" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded">
+                                            Cancel
+                                        </button>
+                                        <button @click="updateProduct" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                                            Update
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

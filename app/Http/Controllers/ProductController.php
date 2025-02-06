@@ -14,6 +14,7 @@ class ProductController extends Controller
                 'id' => $product->id,
                 'code' => $product->code,
                 'name' => $product->name,
+                'category_id' => $product->category_id,
                 'category_name' => $product->category ? $product->category->name : null,
                 'price' => $product->price,
             ];
