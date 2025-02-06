@@ -1,19 +1,25 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import axios from 'axios';
 import { Link } from "@inertiajs/vue3";
 
-const apiURL = 'http://shoe-shop.test/api/products';
+const productsUrl = 'http://shoe-shop.test/api/products';
+const categoriesUrl = 'http://shoe-shop.test/api/categories';
 const products = ref([]);
 const isLoading = ref(false);
+const categories = ref([]);
+const isModalOpen = ref(false);
+const editProduct = reactive({id: "", code: "", name: "", category_id: "", price: ""});
 
 
 const loadProducts = async () => {
     isLoading.value = true;
     try {
-        const response = await axios.get(apiURL);
-        products.value = response.data;
+        const resProducts = await axios.get(productsUrl);
+        const resCategories = await axios.get(categoriesUrl);
+        products.value = resProducts.data;
+        categories.value = resCategories.data;
     } catch (error) {
         console.error('Error loading products:', error);
     } finally {
@@ -34,9 +40,32 @@ const deleteProduct = async (id) => {
     }
 };
 
+const openModal = (product) => {
+    editProduct.id = product.id;
+    editProduct.code = product.code;
+    editProduct.name = product.name;
+    editProduct.category_id = product.category_id;
+    editProduct.price = product.price;
+    isModalOpen.value = true;
+};
 
-const editProduct = (id) => {
-    alert(`Edit produk dengan ID: ${id}`);
+
+const updateProduct = async () => {
+    try {
+        await axios.put(`http://shoe-shop.test/api/products/${editProduct.id}`, {
+            code: editProduct.code,
+            name: editProduct.name,
+            category_id: editProduct.category_id,
+            price: editProduct.price,
+        });
+
+        const index = products.value.findIndex(p => p.id === editProduct.id);
+        if (index !== -1 ) products.value[index] = {...editProduct};
+
+        isModalOpen.value = false;
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 onMounted(loadProducts);
@@ -90,7 +119,7 @@ onMounted(loadProducts);
                                         <td class="px-4 py-2 text-gray-300">
                                             <button
                                                 class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800"
-                                                @click="editProduct(product.id)"
+                                                @click="openModal(product)"
                                             >
                                                 Edit
                                             </button>
@@ -104,6 +133,26 @@ onMounted(loadProducts);
                                     </tr>
                                 </tbody>
                             </table>
+
+                             <!-- Modal -->
+                            <div v-if="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                <div class="bg-white p-6 rounded-lg w-96">
+                                    <h2 class="text-xl font-bold mb-4">Edit Product</h2>
+                                    <input v-model="editProduct.code" type="text" placeholder="Code" class="w-full border p-2 mb-2 rounded" />
+                                    <input v-model="editProduct.name" type="text" placeholder="Name" class="w-full border p-2 mb-2 rounded" />
+                                    <select v-model="editProduct.category_id" class="w-full border p-2 mb-2 rounded">
+                                        <option v-for="category in categories" :key="category.id" :value="category.id">
+                                            {{ category.name }}
+                                        </option>
+                                    </select>
+                                    <input v-model="editProduct.price" type="number" placeholder="Price" class="w-full border p-2 mb-2 rounded" />
+                                    
+                                    <div class="flex justify-end space-x-2 mt-4">
+                                        <button @click="isModalOpen = false" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+                                        <button @click="updateProduct" class="bg-blue-600 text-white px-4 py-2 rounded">Update</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
