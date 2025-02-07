@@ -10,7 +10,7 @@ const products = ref([]);
 const isLoading = ref(false);
 const categories = ref([]);
 const isModalOpen = ref(false);
-const editProduct = reactive({id: "", code: "", name: "", category_id: "", price: ""});
+const editProduct = ref({id: "", code: "", name: "", category_id: "", price: ""});
 
 
 const loadProducts = async () => {
@@ -31,7 +31,7 @@ const deleteProduct = async (id) => {
     if (!confirm("Are you sure delete product?")) return;
 
     try {
-        await axios.delete(`http://shoe-shop.test/api/products/${id}`);
+        await axios.delete(`${productsUrl}/${id}`);
 
         // Hapus dari UI
         products.value = products.value.filter(cat => cat.id !== id);
@@ -41,22 +41,18 @@ const deleteProduct = async (id) => {
 };
 
 const openModal = (product) => {
-    editProduct.id = product.id;
-    editProduct.code = product.code;
-    editProduct.name = product.name;
-    editProduct.category_id = product.category_id;
-    editProduct.price = product.price;
+    editProduct.value = { ...product }; 
     isModalOpen.value = true;
 };
 
 
 const updateProduct = async () => {
     try {
-        await axios.put(`http://shoe-shop.test/api/products/${editProduct.id}`, {
-            code: editProduct.code,
-            name: editProduct.name,
-            category_id: editProduct.category_id,
-            price: editProduct.price,
+        await axios.put(`${productsUrl}/${editProduct.value.id}`, {
+            code: editProduct.value.code,
+            name: editProduct.value.name,
+            category_id: editProduct.value.category_id,
+            price: editProduct.value.price,
         });
 
         await loadProducts(); 
@@ -134,7 +130,7 @@ onMounted(loadProducts);
                             </table>
 
                              <!-- Modal -->
-                            <div v-if="isModalOpen" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+                            <div v-show="isModalOpen" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">
                                 <div class="bg-gray-900 p-6 rounded-lg w-96 shadow-lg">
                                     <h2 class="text-xl font-bold mb-4 text-white">Edit Product</h2>
                                     
